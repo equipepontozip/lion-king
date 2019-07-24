@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-python-machinelearning
+FROM python:3.6
 
 WORKDIR /api
 
@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 ADD . /api/
 
-CMD python api/server.py 
+CMD flask run --host 0.0.0.0 --port 5000
