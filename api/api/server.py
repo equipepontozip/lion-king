@@ -4,12 +4,16 @@ import cv2
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flasgger import Swagger
+from flasgger import swag_from
 
+from swagger.swagger_config import swagger_configuration
 from classifier import keystroke_classifier
 from classifier import face_classifier
 
 
 app = Flask(__name__)
+swagger = Swagger(app, config=swagger_configuration)
 
 
 def decode_image(file):
@@ -22,7 +26,9 @@ def decode_image(file):
     return img_np
 
 
+@app.route('/', methods=['GET'])
 @app.route('/status', methods=['GET'])
+@swag_from('swagger/status.yml')
 def status():
     return jsonify({'status': 'ok'})
 
@@ -37,6 +43,7 @@ def keystroke():
 
 
 @app.route('/face', methods=['POST'])
+@swag_from('swagger/face.yml')
 def face_recognition():
     if not 'image' in request.files:
         response = jsonify({'erro': 'Imagem não enviada no corpo da requisição'})
