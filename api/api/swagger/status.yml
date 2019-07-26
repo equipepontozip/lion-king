@@ -1,8 +1,0 @@
-tags:
-  - Status
-description: "Status da aplicação"
-responses:
-  200:
-    description: "Ok"
-  500:
-    description: "Internal Error"
